@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Signal Generator</title>
+    <title>Quotex Signal</title>
+    <link rel="icon" href="https://i.postimg.cc/25cqbmX3/IMG-6316.png" type="image/png">
     <style>
         body {
             background-color: #121212;
@@ -164,11 +165,21 @@
             flex-direction: column;
             gap: 5px;
         }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            height: 60px;
+        }
     </style>
 </head>
 <body>
     <div class="password-container" id="password-container">
-        <h2>Jisan X Signal Generator</h2>
+        <div class="logo">
+            <img src="https://i.postimg.cc/25cqbmX3/IMG-6316.png" alt="Quotex Signal Logo">
+        </div>
+        <h2>Quotex Signal Generator</h2>
         <p>Password required to access the signal generator</p>
         <p style="font-size: 12px; color: #777;">(Join our Telegram channel to get the password)</p>
         <input type="password" id="password-input" placeholder="Enter password">
@@ -181,11 +192,14 @@
     </div>
 
     <div class="container" id="main-container">
-        <h1>Jisan X Signal REAL-TIME SIGNAL GENERATOR</h1>
-        <p>Jisan X Signal PREMIUM SOFTWARE</p>
+        <div class="logo">
+            <img src="https://i.postimg.cc/25cqbmX3/IMG-6316.png" alt="Quotex Signal Logo">
+        </div>
+        <h1>Quotex Signal REAL-TIME SIGNAL GENERATOR</h1>
+        <p>Quotex Signal PREMIUM SOFTWARE</p>
         <p id="timezone-info">Timezone: Asia/Dhaka | Date: <span id="current-date"></span> | Time: <span id="current-time"></span></p>
         <h3>Join our Telegram Channel:</h3>
-        <a href="https://t.me/DevJisanX" target="_blank" rel="noopener noreferrer">Jisan X Signal Net</a>
+        <a href="https://t.me/DevJisanX" target="_blank" rel="noopener noreferrer">Quotex Signal Net</a>
         
         <h3>Available Assets:</h3>
         <select id="asset-select">
@@ -297,13 +311,22 @@
             };
         }
 
+        function generateRandomInterval() {
+            // Generate random interval between 1 to 8 minutes
+            return Math.floor(Math.random() * 8) + 1;
+        }
+
         function generateUniqueTimes(count, timeframe) {
             const times = [];
             let nextTime = new Date();
+            
             for (let i = 0; i < count; i++) {
-                nextTime.setMinutes(nextTime.getMinutes() + parseInt(timeframe));
+                // Add random interval (1-8 minutes) to the time
+                const randomInterval = generateRandomInterval();
+                nextTime.setMinutes(nextTime.getMinutes() + randomInterval);
                 times.push(formatTime(nextTime));
             }
+            
             return times;
         }
 
@@ -360,7 +383,7 @@
                 return;
             }
 
-            let content = "Jisan X Signal - Premium Signals\n";
+            let content = "Quotex Signal - Premium Signals\n";
             content += "Generated on: " + new Date().toLocaleString() + "\n\n";
             content += "==============================================\n";
             content += "ASSET           ; TIME     ; DIRECTION  TIMEFRAME\n";
@@ -379,7 +402,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `JisanX_Signals_${new Date().toISOString().slice(0,10)}.txt`;
+            a.download = `Quotex_Signals_${new Date().toISOString().slice(0,10)}.txt`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
