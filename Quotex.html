@@ -197,7 +197,7 @@
         <input type="password" id="password-input" placeholder="Enter password">
         <button id="submit-password">Submit</button>
         <p id="password-error" style="color: red; display: none;">Incorrect password. Please try again.</p>
-        <a href="https://t.me/DevJisanX" target="_blank" class="telegram-link">
+        <a href="https://t.me/traderjisanx" target="_blank" class="telegram-link">
             <img src="https://telegram.org/img/t_logo.png" alt="Telegram">
             Join Telegram Channel for Password
         </a>
@@ -222,7 +222,7 @@
         <p id="timezone-info">Timezone: <span id="timezone-display">Asia/Dhaka (GMT+6)</span> | Date: <span id="current-date"></span> | Time: <span id="current-time"></span></p>
         
         <h3>Join our Telegram Channel:</h3>
-        <a href="https://t.me/DevJisanX" target="_blank" rel="noopener noreferrer">Quotex Signal Net</a>
+        <a href="https://t.me/traderjisanx" target="_blank" rel="noopener noreferrer">Quotex Signal Net</a>
         
         <h3>Available Assets:</h3>
         <select id="asset-select">
@@ -255,7 +255,7 @@
         <div class="button-container">
             <button id="generate-signals">Generate Signals</button>
             <button id="reset-signals">Reset Signals</button>
-            <button class="telegram-btn" onclick="window.open('https://t.me/DevJisanX', '_blank')">Join Telegram</button>
+            <button class="telegram-btn" onclick="window.open('https://t.me/traderjisanx', '_blank')">Join Telegram</button>
         </div>
 
         <p id="error-message" class="error-message"></p>
@@ -454,7 +454,7 @@
                 content += `${assetPart} ; ${timePart} ; ${directionPart}\n`;
             });
             
-            content += "\n\nJoin our Telegram channel for more signals: https://t.me/DevJisanX";
+            content += "\n\nJoin our Telegram channel for more signals: https://t.me/traderjisanx";
             
             const blob = new Blob([content], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
