@@ -210,16 +210,7 @@
         <h1>Quotex Signal REAL-TIME SIGNAL GENERATOR</h1>
         <p>Quotex Signal PREMIUM SOFTWARE</p>
         
-        <h3>Select Country:</h3>
-        <select id="country-select">
-            <option value="Asia/Dhaka">Bangladesh (GMT+6)</option>
-            <option value="Asia/Kolkata">India (GMT+5:30)</option>
-            <option value="Asia/Karachi">Pakistan (GMT+5)</option>
-            <option value="America/Sao_Paulo">Brazil (GMT-3)</option>
-            <option value="Asia/Kabul">Afghanistan (GMT+4:30)</option>
-        </select>
-        
-        <p id="timezone-info">Timezone: <span id="timezone-display">Asia/Dhaka (GMT+6)</span> | Date: <span id="current-date"></span> | Time: <span id="current-time"></span></p>
+        <p id="timezone-info">Timezone: <span id="timezone-display"></span> | Date: <span id="current-date"></span> | Time: <span id="current-time"></span></p>
         
         <h3>Join our Telegram Channel:</h3>
         <a href="https://t.me/traderjisanx" target="_blank" rel="noopener noreferrer">Quotex Signal Net</a>
@@ -286,17 +277,10 @@
         const CORRECT_PASSWORD = "LXEDFG";
         let signals = [];
         let existingSignals = new Set();
-        let currentTimezone = "Asia/Dhaka";
         let currentTimeframe = "5";
-
-        // Country to GMT mapping
-        const countryGMT = {
-            "Asia/Dhaka": "GMT+6",
-            "Asia/Kolkata": "GMT+5:30",
-            "Asia/Karachi": "GMT+5",
-            "America/Sao_Paulo": "GMT-3",
-            "Asia/Kabul": "GMT+4:30"
-        };
+        let userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        let gmtOffset = -new Date().getTimezoneOffset() / 60;
+        let gmtString = `GMT${gmtOffset >= 0 ? '+' : ''}${gmtOffset}`;
 
         // Password protection
         document.getElementById('submit-password').addEventListener('click', function() {
@@ -306,6 +290,7 @@
             if (enteredPassword === CORRECT_PASSWORD) {
                 document.getElementById('password-container').style.display = 'none';
                 document.getElementById('main-container').style.display = 'block';
+                updateTimezoneDisplay();
             } else {
                 errorElement.style.display = 'block';
             }
@@ -319,7 +304,6 @@
 
         function formatTime(date) {
             const options = {
-                timeZone: currentTimezone,
                 hour12: false,
                 hour: '2-digit',
                 minute: '2-digit'
@@ -329,7 +313,6 @@
 
         function formatDate(date) {
             const options = {
-                timeZone: currentTimezone,
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit'
@@ -348,7 +331,11 @@
         }
 
         function generateSignal(asset, time) {
-            const direction = Math.random() < 0.5 ? 'CALL' : 'PUT';
+            // Generate random direction (50/50 chance)
+            let direction = Math.random() < 0.5 ? 'CALL' : 'PUT';
+            
+            // Reverse the direction for better accuracy
+            direction = direction === 'CALL' ? 'PUT' : 'CALL';
             
             return {
                 asset,
@@ -365,10 +352,6 @@
         function generateUniqueTimes(count, timeframe) {
             const times = [];
             let nextTime = new Date();
-            
-            // Adjust for selected timezone
-            const options = { timeZone: currentTimezone };
-            nextTime = new Date(nextTime.toLocaleString('en-US', options));
             
             for (let i = 0; i < count; i++) {
                 // Add random interval (1-8 minutes) to the time
@@ -440,7 +423,7 @@
 
             let content = "Quotex Signal - Premium Signals\n";
             content += "Generated on: " + new Date().toLocaleString() + "\n";
-            content += "Timezone: " + currentTimezone + " (" + countryGMT[currentTimezone] + ")\n";
+            content += "Timezone: " + userTimezone + " (" + gmtString + ")\n";
             content += "Candle time: " + getTimeframeText(currentTimeframe) + "\n";
             content += "Use 1Step MTG If You Lose\n\n";
             content += "==============================================\n";
@@ -489,10 +472,8 @@
             document.getElementById('current-time').textContent = formatTime(currentDate);
         }
 
-        function updateTimezone() {
-            const countrySelect = document.getElementById('country-select');
-            currentTimezone = countrySelect.value;
-            document.getElementById('timezone-display').textContent = `${currentTimezone} (${countryGMT[currentTimezone]})`;
+        function updateTimezoneDisplay() {
+            document.getElementById('timezone-display').textContent = `${userTimezone} (${gmtString})`;
             updateDateTime();
         }
 
@@ -509,7 +490,6 @@
         document.getElementById('generate-signals').addEventListener('click', handleGenerateSignals);
         document.getElementById('reset-signals').addEventListener('click', handleResetSignals);
         document.getElementById('download-signals').addEventListener('click', downloadSignals);
-        document.getElementById('country-select').addEventListener('change', updateTimezone);
         document.getElementById('timeframe-select').addEventListener('change', function() {
             currentTimeframe = this.value;
         });
@@ -517,7 +497,6 @@
         // Update time every second
         setInterval(updateDateTime, 1000);
         updateDateTime();
-        updateTimezone(); // Initialize timezone display
     </script>
 </body>
 </html>
