@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="true">
     <title>Quotex Signal</title>
     <link rel="icon" href="https://i.postimg.cc/25cqbmX3/IMG-6316.png" type="image/png">
     <style>
@@ -331,11 +334,8 @@
         }
 
         function generateSignal(asset, time) {
-            // Generate random direction (50/50 chance)
+            // Generate completely random direction (50/50 chance)
             let direction = Math.random() < 0.5 ? 'CALL' : 'PUT';
-            
-            // Reverse the direction for better accuracy
-            direction = direction === 'CALL' ? 'PUT' : 'CALL';
             
             return {
                 asset,
