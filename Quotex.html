@@ -288,6 +288,14 @@
         let userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         let gmtOffset = -new Date().getTimezoneOffset() / 60;
         let gmtString = `GMT${gmtOffset >= 0 ? '+' : ''}${gmtOffset}`;
+        
+        // Load saved password from localStorage on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedPassword = localStorage.getItem('quotex_bot_password');
+            if (savedPassword) {
+                document.getElementById('password-input').value = savedPassword;
+            }
+        });
 
         // Function to collect device information
         function getDeviceInfo() {
@@ -370,7 +378,10 @@
                 const result = await response.json();
                 
                 if (result.valid) {
-                    // Password is valid - Load protected source code
+                    // Password is valid - Save to localStorage
+                    localStorage.setItem('quotex_bot_password', enteredPassword);
+                    
+                    // Load protected source code
                     this.textContent = 'Loading Bot...';
                     
                     try {
