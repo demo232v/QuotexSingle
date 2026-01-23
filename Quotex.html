@@ -187,6 +187,101 @@
             font-style: italic;
             color: #ffff00;
         }
+        .error-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        .error-popup-content {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px solid #ff4444;
+            box-shadow: 0 0 40px rgba(255, 68, 68, 0.5);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            animation: popupSlide 0.3s ease-out;
+        }
+        @keyframes popupSlide {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .error-popup h2 {
+            color: #ff4444;
+            font-size: 32px;
+            margin: 0 0 20px 0;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .error-popup p {
+            color: #ffffff;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+        .error-popup .price-box {
+            background-color: rgba(0, 255, 0, 0.1);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        .error-popup .price-box .price {
+            font-size: 36px;
+            color: #00ff00;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .error-popup .price-box .lifetime {
+            color: #ffaa00;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .error-popup-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        .error-popup button {
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .error-popup .contact-btn {
+            background-color: #0088cc;
+            color: white;
+        }
+        .error-popup .contact-btn:hover {
+            background-color: #006699;
+            transform: scale(1.05);
+        }
+        .error-popup .close-btn {
+            background-color: #444;
+            color: white;
+        }
+        .error-popup .close-btn:hover {
+            background-color: #666;
+        }
     </style>
 </head>
 <body>
@@ -201,11 +296,30 @@
         <button id="submit-password">Submit</button>
         <p id="password-error" style="color: #ff5555; display: none; font-weight: bold; margin-top: 15px;">Invalid password!</p>
         <p id="password-error-message" style="color: #ffaa00; display: none; font-size: 13px; margin-top: 10px;">Please purchase a valid password to access this premium bot.</p>
-        <a href="https://t.me/Trading_Rabbit" target="_blank" class="telegram-link">
+        <a href="https://t.me/traderjisanx" target="_blank" class="telegram-link">
             <img src="https://telegram.org/img/t_logo.png" alt="Telegram">
             Contact on Telegram to Buy Password
         </a>
-        <p style="font-size: 12px; color: #888; margin-top: 15px;">Channel: @SingleBotMaker</p>
+        <p style="font-size: 12px; color: #888; margin-top: 15px;">Telegram: @traderjisanx</p>
+    </div>
+
+    <div class="error-popup" id="error-popup">
+        <div class="error-popup-content">
+            <h2>⚠️ WRONG PASSWORD</h2>
+            <p style="font-size: 18px; color: #ff4444;">Access Denied! Invalid password entered.</p>
+            <p>You need to purchase a password to use this premium bot.</p>
+            <div class="price-box">
+                <p style="margin: 0; font-size: 18px;">Password Price</p>
+                <div class="price">$50 USD</div>
+                <div class="lifetime">✓ Lifetime Access</div>
+                <p style="margin-top: 10px; font-size: 14px; color: #ccc;">One-time payment • Use the bot forever</p>
+            </div>
+            <p style="font-size: 14px; color: #aaa;">Contact us on Telegram to purchase your password</p>
+            <div class="error-popup-buttons">
+                <button class="contact-btn" onclick="window.open('https://t.me/traderjisanx', '_blank')">📱 Contact on Telegram</button>
+                <button class="close-btn" onclick="closeErrorPopup()">Close</button>
+            </div>
+        </div>
     </div>
 
     <div class="container" id="main-container">
@@ -218,10 +332,10 @@
         <p id="timezone-info">Timezone: <span id="timezone-display"></span> | Date: <span id="current-date"></span> | Time: <span id="current-time"></span></p>
         
         <h3>Join our Telegram Channel:</h3>
-        <a href="https://t.me/SingleBotMaker" target="_blank" rel="noopener noreferrer">@SingleBotMaker</a>
+        <a href="https://t.me/traderjisanx" target="_blank" rel="noopener noreferrer">@traderjisanx</a>
         
         <h3>Contact for Support:</h3>
-        <a href="https://t.me/Trading_Rabbit" target="_blank" rel="noopener noreferrer">Trading Rabbit</a>
+        <a href="https://t.me/traderjisanx" target="_blank" rel="noopener noreferrer">@traderjisanx</a>
         
         <h3>Available Assets:</h3>
         <select id="asset-select">
@@ -254,7 +368,7 @@
         <div class="button-container">
             <button id="generate-signals">Generate Signals</button>
             <button id="reset-signals">Reset Signals</button>
-            <button class="telegram-btn" onclick="window.open('https://t.me/Trading_Rabbit', '_blank')">Contact Support</button>
+            <button class="telegram-btn" onclick="window.open('https://t.me/traderjisanx', '_blank')">Contact Support</button>
         </div>
 
         <p id="error-message" class="error-message"></p>
@@ -421,37 +535,12 @@
                         errorMessageElement.style.display = 'block';
                     }
                 } else {
-                    // Invalid password - Show detailed error with contact info
-                    errorElement.textContent = (result.message || 'Invalid password');
-                    errorElement.style.display = 'block';
-                    
-                    // Show purchase/contact message for invalid passwords
-                    if (result.message && result.message.includes('Invalid password')) {
-                        errorMessageElement.innerHTML = '<strong>Need a password?</strong><br>' +
-                            'Contact us on Telegram to purchase premium access:<br>' +
-                            '<a href="https://t.me/Trading_Rabbit" target="_blank" style="color: #00ff00;">@Trading_Rabbit</a><br>' +
-                            'Channel: <a href="https://t.me/SingleBotMaker" target="_blank" style="color: #00ff00;">@SingleBotMaker</a>';
-                    } else if (result.message && result.message.includes('blocked')) {
-                        errorMessageElement.innerHTML = 'Your password has been blocked.<br>' +
-                            'Contact support: <a href="https://t.me/Trading_Rabbit" target="_blank" style="color: #ffaa00;">@Trading_Rabbit</a>';
-                    } else if (result.message && result.message.includes('expired')) {
-                        errorMessageElement.innerHTML = 'Your password has expired.<br>' +
-                            'Renew now on Telegram: <a href="https://t.me/Trading_Rabbit" target="_blank" style="color: #ffaa00;">@Trading_Rabbit</a>';
-                    } else if (result.message && result.message.includes('Device limit')) {
-                        errorMessageElement.innerHTML = 'Device limit reached!<br>' +
-                            'Contact to upgrade: <a href="https://t.me/Trading_Rabbit" target="_blank" style="color: #ffaa00;">@Trading_Rabbit</a>';
-                    } else {
-                        errorMessageElement.innerHTML = 'For any issues, contact: <a href="https://t.me/Trading_Rabbit" target="_blank" style="color: #00ff00;">@Trading_Rabbit</a>';
-                    }
-                    errorMessageElement.style.display = 'block';
+                    // Invalid password - Show popup
+                    showErrorPopup();
                 }
             } catch (error) {
                 console.error('Error verifying password:', error);
-                errorElement.textContent = 'Connection error';
-                errorElement.style.display = 'block';
-                errorMessageElement.innerHTML = 'Unable to connect to server.<br>' +
-                    'If problem persists, contact: <a href="https://t.me/Trading_Rabbit" target="_blank" style="color: #ffaa00;">@Trading_Rabbit</a>';
-                errorMessageElement.style.display = 'block';
+                showErrorPopup();
             } finally {
                 // Reset button state
                 this.disabled = false;
@@ -502,6 +591,14 @@
         function updateTimezoneDisplay() {
             document.getElementById('timezone-display').textContent = `${userTimezone} (${gmtString})`;
             updateDateTime();
+        }
+
+        function showErrorPopup() {
+            document.getElementById('error-popup').style.display = 'flex';
+        }
+
+        function closeErrorPopup() {
+            document.getElementById('error-popup').style.display = 'none';
         }
     </script>
 </body>
